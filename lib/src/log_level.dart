@@ -1,3 +1,6 @@
+/**
+ * Степень важности сообщения
+ */
 enum LogLevel {
   trace,
   debug,
