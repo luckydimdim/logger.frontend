@@ -45,7 +45,7 @@ class LoggerService {
     try {
       await _http.post(_backendUrl +'/log',
         headers: {'Content-Type': 'application/json'},
-        body: {"level": "$logLevel", "message": "$message"});
+        body: {"level": "${JSON.encode(logLevel)}", "message": "${JSON.encode(message)}"});
     } catch (e) {
       print('Failed to send log message to the server: $e');
 
