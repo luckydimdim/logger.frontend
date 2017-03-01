@@ -8,10 +8,11 @@ import 'package:config/config_service.dart';
 
 import 'log_level.dart';
 
-@Injectable()
 /**
  * Отправляет логи на сервер
- */ class LoggerService {
+ */
+@Injectable()
+class LoggerService {
   static const _url = 'http://localhost:5000/log';
   BrowserClient _http;
   ConfigService _config;
