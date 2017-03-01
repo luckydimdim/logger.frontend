@@ -13,7 +13,6 @@ import 'log_level.dart';
  */
 @Injectable()
 class LoggerService {
-  static const _url = 'http://localhost:5000/log';
   BrowserClient _http;
   ConfigService _config;
 
@@ -40,8 +39,11 @@ class LoggerService {
     if (logLevel.index <= minLogLevel.index)
       return null;
 
+    String _backendUrl =
+      await _config.Get<String>('backend_url', 'http://localhost:5000');
+
     try {
-      await _http.post(_url,
+      await _http.post(_backendUrl +'/log',
         headers: {'Content-Type': 'application/json'},
         body: {"level": "$logLevel", "message": "$message"});
     } catch (e) {
