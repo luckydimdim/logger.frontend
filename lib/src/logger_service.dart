@@ -41,15 +41,8 @@ class LoggerService {
 
     print('Sending logs to server. LogLevel: $logLevel. Message: $message.');
 
-    // TODO: вынести в отдельный метод
-    String backendScheme = await _config.Get<String>('backend_scheme');
-    String backendBaseUrl = await _config.Get<String>('backend_base_url');
-    String backendPort = await _config.Get<String>('backend_port');
-    String backendLogs = await _config.Get<String>('backend_logs');
-    String backendUrl = '$backendScheme://$backendBaseUrl:$backendPort/$backendLogs';
-
     try {
-      await _http.post(backendUrl,
+      await _http.post(_config.helper.logsUrl,
         headers: {'Content-Type': 'application/json'},
         body: {"level": "${JSON.encode(logLevel)}", "message": "${JSON.encode(message)}"});
     } catch (e) {
