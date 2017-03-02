@@ -33,11 +33,13 @@ class LoggerService {
   critical(String message) => _log(LogLevel.critical, message);
 
   Future _log(LogLevel logLevel, String message) async {
-    String minLogLevelString = await _config.Get<String>('log_level', 'error');
+    String minLogLevelString = await _config.Get<String>('log_level', 'information');
     LogLevel minLogLevel = enumFromString(minLogLevelString, LogLevel);
 
     if (logLevel.index <= minLogLevel.index)
       return null;
+
+    print('Sending logs to server. LogLevel: $logLevel. Message: $message.');
 
     String _backendUrl =
       await _config.Get<String>('backend_url', 'http://localhost:5000');
