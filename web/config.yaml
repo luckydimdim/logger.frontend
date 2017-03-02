@@ -1,8 +1,14 @@
-#some comment
+# Mode
 production: false
-
-#some comment 2
-backend_url: //localhost:5000
 
 # Minimal log level
 log_level: trace
+
+# Backend url
+backend_scheme: http         # Scheme
+backend_base_url: localhost  # Base service url
+backend_port: 5000           # Backend port
+
+# API urls
+backend_contracts: contracts
+backend_logs: log
