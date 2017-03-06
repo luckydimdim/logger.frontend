@@ -15,9 +15,22 @@ import 'log_level.dart';
 class LoggerService {
   BrowserClient _http;
   ConfigService _config;
+  String _backendUrl = null;
+  bool _initialized = false;
 
   LoggerService(this._config) {
     _http = new BrowserClient();
+  }
+
+  _init() async {
+    String backendScheme = await _config.Get<String>('backend_scheme');
+    String backendBaseUrl = await _config.Get<String>('backend_base_url');
+    String backendPort = await _config.Get<String>('backend_port');
+    String backendLogs = await _config.Get<String>('backend_logs');
+
+    _backendUrl = '$backendScheme://$backendBaseUrl:$backendPort/$backendLogs';
+
+    _initialized = true;
   }
 
   trace(String message) => _log(LogLevel.trace, message);
@@ -44,8 +57,13 @@ class LoggerService {
     if (!isProduction)
       print('Sending logs to server. LogLevel: $logLevel. Message: $message.');
 
+    if (!_initialized)
+      await _init();
+
     try {
-      await _http.post(_config.helper.logsUrl,
+      await _http.post(
+        /*_config.helper.logsUrl,*/
+        _backendUrl,
         headers: {'Content-Type': 'application/json'},
         body: {"level": "${JSON.encode(logLevel)}", "message": "${JSON.encode(message)}"});
     } catch (e) {
