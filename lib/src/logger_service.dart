@@ -39,7 +39,10 @@ class LoggerService {
     if (logLevel.index <= minLogLevel.index)
       return null;
 
-    print('Sending logs to server. LogLevel: $logLevel. Message: $message.');
+    // В дебаг-режиме дополнительно выводим сообщение в консоль
+    bool isProduction = await _config.Get<bool>('production');
+    if (!isProduction)
+      print('Sending logs to server. LogLevel: $logLevel. Message: $message.');
 
     try {
       await _http.post(_config.helper.logsUrl,
