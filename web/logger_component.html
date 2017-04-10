@@ -1,0 +1,64 @@
+<div class="card">
+	<div class="card-header">
+		<strong>Отладка отправки диагностических сообщений</strong>
+	</div>
+	<div class="card-block">
+		<div class="form-group row">
+			<div class="col-sm-6">
+				<input type="text" class="form-control" placeholder="information text" #infoInput>
+			</div>
+			<div class="col-sm-6">
+				<button class="btn btn-default test-logger" (click)="sendInformation(infoInput)">Send information
+					message
+				</button>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-sm-6">
+				<input type="text" class="form-control" placeholder="trace text" #traceInput>
+			</div>
+			<div class="col-sm-6">
+				<button class="btn btn-default test-logger" (click)="sendTrace(traceInput)">Send trace message</button>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-sm-6">
+				<input type="text" class="form-control" placeholder="debug text" #debugInput>
+			</div>
+			<div class="col-sm-6">
+				<button class="btn btn-secondary test-logger" (click)="sendDebug(debugInput)">Send debug message</button>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-sm-6">
+				<input type="text" class="form-control" placeholder="warning text" #warningInput>
+			</div>
+			<div class="col-sm-6">
+				<button class="btn btn-warning test-logger" (click)="sendWarning(warningInput)">Send warning message
+				</button>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-sm-6">
+				<input type="text" class="form-control" placeholder="error text" #errorInput>
+			</div>
+			<div class="col-sm-6">
+				<button class="btn btn-danger test-logger" (click)="sendError(errorInput)">Send error message</button>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-sm-6">
+				<input type="text" class="form-control" placeholder="critical text" #criticalInput>
+			</div>
+			<div class="col-sm-6">
+				<button class="btn btn-danger test-logger" (click)="sendCritical(criticalInput)">Send critical message</button>
+			</div>
+		</div>
+		<div class="form-group row">
+			
+			<div class="col-md-9">
+				<textarea id="textarea-input" name="textarea-input" rows="9" class="form-control" placeholder="">{{debugText}}</textarea>
+			</div>
+		</div>
+	</div>
+</div>

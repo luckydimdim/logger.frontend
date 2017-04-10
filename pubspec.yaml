@@ -17,13 +17,17 @@ dependencies:
     http: ^0.11.3                         # A composable, Future-based API for making HTTP requests. https://pub.dartlang.org/packages/http
     config:
       git: http://cm-ylng-msk-04/git/config.frontend.git
-
 dev_dependencies:
     test: ^0.12.18                        # A library for writing dart unit tests. https://pub.dartlang.org/packages/test
     yaml: ^2.1.12                         # A parser for YAML. https://pub.dartlang.org/packages/yaml
     master_layout:
       git: http://cm-ylng-msk-04/git/master_layout.frontend.git
-
+    auth:
+      git: http://cm-ylng-msk-04/git/auth.frontend.git
+    alert:
+      git: http://cm-ylng-msk-04/git/alert.frontend.git
+    aside:
+      git: http://cm-ylng-msk-04/git/aside.frontend.git
 # Used to configure dart2js or other transformers
 transformers:
     - angular2:

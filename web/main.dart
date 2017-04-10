@@ -8,7 +8,10 @@ import 'package:angular2/platform/common.dart';
 
 import 'package:master_layout/master_layout_component.dart';
 import 'package:config/config_service.dart';
-import 'package:logger/logger_component.dart';
+import 'logger_component.dart';
+import 'package:auth/auth_service.dart';
+import 'package:alert/alert_service.dart';
+import 'package:aside/aside_service.dart';
 
 bool get isDebug =>
     (const String.fromEnvironment('PRODUCTION', defaultValue: 'false')) !=
@@ -29,6 +32,9 @@ main() async {
     ROUTER_PROVIDERS,
     const Provider(LocationStrategy, useClass: HashLocationStrategy),
     const Provider(MasterLayoutComponent),
+    const Provider(AuthenticationService),
+    const Provider(AlertService),
+    const Provider(AsideService),
     const Provider(ConfigService)
   ]);
 

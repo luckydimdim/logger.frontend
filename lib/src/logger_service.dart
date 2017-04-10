@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:mirrors';
+
 import 'package:http/browser_client.dart';
 import 'package:angular2/core.dart';
-
 import 'package:config/config_service.dart';
 
 import 'log_level.dart';
@@ -33,29 +32,38 @@ class LoggerService {
   critical(String message) => _log(LogLevel.critical, message);
 
   Future _log(LogLevel logLevel, String message) async {
-    LogLevel minLogLevel = enumFromString(_config.helper.minLogLevel, LogLevel);
+    LogLevel minLogLevel = logLevelFromString(_config.helper.minLogLevel);
 
-    if (logLevel.index <= minLogLevel.index)
+    if (logLevel.index < minLogLevel.index)
       return null;
 
     // В дебаг-режиме дополнительно выводим сообщение в консоль
     if (!_config.helper.production)
       print('Sending logs to server. LogLevel: $logLevel. Message: $message.');
 
+    String jsonText = JSON.encode(
+        {"level": "$logLevel", "message": "$message"});
+
     try {
       await _http.post(
-        _config.helper.logsUrl,
-        headers: {'Content-Type': 'application/json'},
-        body: {"level": "${JSON.encode(logLevel)}", "message": "${JSON.encode(message)}"});
+          _config.helper.logsUrl,
+          headers: {'Content-Type': 'application/json'},
+          body: jsonText);
     } catch (e) {
       print('Failed to send log message to the server: $e');
 
       return new Exception(
-        'Failed to send log message to the server. Cause: $e');
+          'Failed to send log message to the server. Cause: $e');
     }
+  }
+
+  dynamic logLevelFromString(String value) {
+    for (var level in LogLevel.values) {
+      if (level.toString().split('.')[1].toUpperCase() == value.toUpperCase())
+        return level;
+    }
+
+    throw new Exception('Unknown level: $value');
   }
 }
 
-dynamic enumFromString(String value, t) {
-  return (reflectType(t) as ClassMirror).getField(#values).reflectee.firstWhere((e) => e.toString().split('.')[1].toUpperCase() == value.toUpperCase());
-}
