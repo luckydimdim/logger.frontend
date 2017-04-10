@@ -37,12 +37,14 @@ class LoggerService {
     if (logLevel.index < minLogLevel.index)
       return null;
 
+    String logLevelStr = logLevelToString(logLevel);
+
     // В дебаг-режиме дополнительно выводим сообщение в консоль
     if (!_config.helper.production)
-      print('Sending logs to server. LogLevel: $logLevel. Message: $message.');
+      print('Sending logs to server. LogLevel: $logLevelStr. Message: $message.');
 
     String jsonText = JSON.encode(
-        {"level": "$logLevel", "message": "$message"});
+        {"level": "$logLevelStr", "message": "$message"});
 
     try {
       await _http.post(
@@ -64,6 +66,10 @@ class LoggerService {
     }
 
     throw new Exception('Unknown level: $value');
+  }
+
+  String logLevelToString(LogLevel logLevel) {
+    return logLevel.toString().split('.')[1];
   }
 }
 
